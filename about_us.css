@@ -1,0 +1,53 @@
+.about-hero {
+    text-align: center; padding: 70px 40px 50px;
+    background: linear-gradient(135deg, var(--dark), #3a5166);
+    color: white;
+}
+.about-hero h1 { font-family: 'Syne', sans-serif; font-size: 2.8rem; font-weight: 800; margin-bottom: 10px; }
+.about-hero p { color: #BFC9D1; font-size: 1.05rem; }
+
+.about-block {
+    display: flex; align-items: center; gap: 60px;
+    padding: 70px 80px; flex-wrap: wrap;
+}
+.about-block.reverse { flex-direction: row-reverse; }
+.about-block.grey-bg { background: var(--nav-bg); }
+
+.about-text { flex: 1; min-width: 280px; }
+.about-label {
+    font-family: 'Syne', sans-serif; font-weight: 700;
+    font-size: 0.82rem; text-transform: uppercase; letter-spacing: 1.5px;
+    color: var(--accent); display: block; margin-bottom: 10px;
+}
+.about-text h2 { font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 800; margin-bottom: 18px; }
+.about-text p { font-size: 0.96rem; color: var(--text-muted); line-height: 1.75; margin-bottom: 14px; }
+
+.about-visual {
+    flex: 0 0 260px; border-radius: 24px; padding: 40px 30px;
+    text-align: center; color: white; box-shadow: var(--shadow);
+}
+.about-visual i { font-size: 2.5rem; margin-bottom: 16px; display: block; }
+.about-visual h3 { font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800; margin-bottom: 8px; }
+.about-visual p { font-size: 0.92rem; opacity: 0.85; }
+.blue-card { background: linear-gradient(135deg, #2563eb, #1a3a8f); }
+.orange-card { background: linear-gradient(135deg, var(--accent2), var(--accent)); color: var(--dark); }
+.orange-card p { opacity: 0.75; }
+.dark-card { background: linear-gradient(135deg, var(--dark), #3a5166); }
+
+/* VALUES */
+.values-section { padding: 70px 80px; background: var(--nav-bg); }
+.values-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 24px;
+}
+.value-card {
+    background: var(--white); border-radius: var(--radius);
+    padding: 30px 24px; text-align: center;
+    box-shadow: var(--shadow); transition: transform 0.25s;
+    border-bottom: 4px solid transparent;
+}
+.value-card:hover { transform: translateY(-5px); border-bottom-color: var(--accent); }
+.value-card i { font-size: 1.8rem; color: var(--accent); margin-bottom: 14px; display: block; }
+.value-card h3 { font-family: 'Syne', sans-serif; font-weight: 700; margin-bottom: 10px; }
+.value-card p { font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; }

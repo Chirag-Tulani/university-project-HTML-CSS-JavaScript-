@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechLearn – Quiz Area</title>
+    <link rel="stylesheet" href="common.css">
+    <link rel="stylesheet" href="quiz.css">
+    <script src="https://kit.fontawesome.com/6dd324579f.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div class="header">
+    <div class="menu_bar">
+        <div class="left_side">TechLearn</div>
+        <div class="middle_side">Quiz Area</div>
+        <div class="right_side">
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="about_us.html">About Us</a></li>
+                <li><a href="quiz.html" class="active">Quiz</a></li>
+                <li><a href="ai_tools.html">AI Tools</a></li>
+                <li><a href="contact_us.html">Contact</a></li>
+                <li><a href="loginPage.html" class="btn btn-primary" style="padding:7px 18px;">Login</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- QUIZ HERO -->
+<section class="quiz-hero">
+    <h1><i class="fa-solid fa-circle-question"></i> Quiz Area</h1>
+    <p>Test your knowledge in AI, Web Development & General Technology</p>
+</section>
+
+<!-- TOPIC SELECTION -->
+<section class="topic-section" id="topicSection">
+    <h2 class="section-title">Choose a Topic</h2>
+    <p class="section-subtitle">Pick a category and difficulty to start your quiz</p>
+    <div class="topic-grid">
+        <div class="topic-card" data-topic="ai">
+            <div class="topic-icon"><i class="fa-solid fa-robot"></i></div>
+            <h3>Artificial Intelligence</h3>
+            <p>Machine learning, neural networks, NLP and more</p>
+            <span class="topic-count">20 Questions</span>
+        </div>
+        <div class="topic-card" data-topic="webdev">
+            <div class="topic-icon"><i class="fa-solid fa-code"></i></div>
+            <h3>Web Development</h3>
+            <p>HTML, CSS, JavaScript, and front-end concepts</p>
+            <span class="topic-count">20 Questions</span>
+        </div>
+        <div class="topic-card" data-topic="general">
+            <div class="topic-icon"><i class="fa-solid fa-microchip"></i></div>
+            <h3>General Technology</h3>
+            <p>Computers, networks, software, and hardware basics</p>
+            <span class="topic-count">20 Questions</span>
+        </div>
+    </div>
+
+    <div class="difficulty-row" id="difficultyRow" style="display:none;">
+        <h3>Select Difficulty</h3>
+        <div class="diff-btns">
+            <button class="diff-btn" data-diff="easy"><i class="fa-solid fa-seedling"></i> Easy</button>
+            <button class="diff-btn" data-diff="medium"><i class="fa-solid fa-fire"></i> Medium</button>
+            <button class="diff-btn" data-diff="hard"><i class="fa-solid fa-skull"></i> Hard</button>
+        </div>
+        <button class="btn btn-primary" id="startQuizBtn" style="margin-top:20px;display:none;">
+            Start Quiz <i class="fa-solid fa-play"></i>
+        </button>
+    </div>
+</section>
+
+<!-- QUIZ AREA -->
+<section class="quiz-section hidden" id="quizSection">
+    <div class="quiz-header-bar">
+        <div class="quiz-info">
+            <span id="quizTopicLabel"></span>
+            <span class="sep">|</span>
+            <span id="quizDiffLabel"></span>
+        </div>
+        <div class="quiz-meta">
+            <span><i class="fa-regular fa-clock"></i> <span id="timerDisplay">30</span>s</span>
+            <span>Q <span id="qNum">1</span> / <span id="qTotal">10</span></span>
+            <span>Score: <span id="scoreDisplay">0</span></span>
+        </div>
+    </div>
+    <div class="progress-bar-wrap"><div class="progress-bar" id="progressBar"></div></div>
+
+    <div class="question-box">
+        <p class="question-text" id="questionText">Loading question...</p>
+        <div class="options-grid" id="optionsGrid">
+            <!-- options injected by JS -->
+        </div>
+        <button class="btn btn-dark" id="nextBtn" style="display:none;margin-top:20px;" onclick="nextQuestion()">
+            Next <i class="fa-solid fa-arrow-right"></i>
+        </button>
+    </div>
+</section>
+
+<!-- RESULT -->
+<section class="result-section hidden" id="resultSection">
+    <div class="result-card">
+        <div class="result-icon" id="resultIcon"></div>
+        <h2 id="resultTitle"></h2>
+        <p id="resultMsg"></p>
+        <div class="result-stats">
+            <div><h3 id="finalScore"></h3><p>Score</p></div>
+            <div><h3 id="finalCorrect"></h3><p>Correct</p></div>
+            <div><h3 id="finalWrong"></h3><p>Wrong</p></div>
+            <div><h3 id="finalTime"></h3><p>Avg Time</p></div>
+        </div>
+        <div class="result-btns">
+            <button class="btn btn-primary" onclick="retryQuiz()">Retry <i class="fa-solid fa-rotate-right"></i></button>
+            <button class="btn btn-dark" onclick="goToTopics()">Change Topic <i class="fa-solid fa-list"></i></button>
+        </div>
+    </div>
+    <!-- Answer Review -->
+    <div class="review-area" id="reviewArea"></div>
+</section>
+
+<!-- LEADERBOARD -->
+<section class="leaderboard-section" id="leaderboardSection">
+    <h2 class="section-title"><i class="fa-solid fa-trophy"></i> Your Recent Scores</h2>
+    <div id="leaderboardList" class="lb-list">
+        <p class="no-scores">No scores yet. Take a quiz to get started!</p>
+    </div>
+    <button class="btn btn-dark" onclick="clearScores()" style="margin-top:16px;">Clear History</button>
+</section>
+
+<!-- FOOTER -->
+<div class="footer">
+    <div class="footer1">
+        <div class="contact"><h2>Contact</h2><p>Punjab, India</p><p>+91 ### ### ####</p></div>
+        <div class="useful_links">
+            <h2>Quick Links</h2>
+            <a href="home.html">Home</a>
+            <a href="ai_tools.html">AI Tools</a>
+            <a href="contact_us.html">Contact Us</a>
+        </div>
+    </div>
+    <div class="footer2">
+        <div class="left_side">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+        </div>
+        <div class="right_side">
+            <i class="fa-brands fa-facebook"></i>
+            <i class="fa-brands fa-instagram"></i>
+            <i class="fa-brands fa-whatsapp"></i>
+        </div>
+    </div>
+</div>
+
+<script src="quiz.js"></script>
+<script src="auth.js"></script>
+</body>
+</html>

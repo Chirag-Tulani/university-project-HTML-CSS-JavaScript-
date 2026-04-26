@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechLearn – AI Tools Directory</title>
+    <link rel="stylesheet" href="common.css">
+    <link rel="stylesheet" href="ai_tools.css">
+    <script src="https://kit.fontawesome.com/6dd324579f.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div class="header">
+    <div class="menu_bar">
+        <div class="left_side">TechLearn</div>
+        <div class="middle_side">AI Tools Directory</div>
+        <div class="right_side">
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="about_us.html">About Us</a></li>
+                <li><a href="quiz.html">Quiz</a></li>
+                <li><a href="ai_tools.html" class="active">AI Tools</a></li>
+                <li><a href="contact_us.html">Contact</a></li>
+                <li><a href="loginPage.html" class="btn btn-primary" style="padding:7px 18px;">Login</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- HERO -->
+<section class="tools-hero">
+    <h1><i class="fa-solid fa-robot"></i> AI Tools Directory</h1>
+    <p>Discover the best AI tools across writing, coding, design, productivity and more</p>
+    <div class="search-bar">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="searchInput" placeholder="Search tools by name, category or description...">
+        <button onclick="clearSearch()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+</section>
+
+<!-- FILTERS -->
+<section class="filters-section">
+    <div class="filter-group">
+        <span class="filter-label">Category:</span>
+        <div class="filter-btns" id="categoryFilters">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="writing">✍️ Writing</button>
+            <button class="filter-btn" data-filter="coding">💻 Coding</button>
+            <button class="filter-btn" data-filter="image">🎨 Image</button>
+            <button class="filter-btn" data-filter="video">🎬 Video</button>
+            <button class="filter-btn" data-filter="productivity">⚡ Productivity</button>
+            <button class="filter-btn" data-filter="research">🔬 Research</button>
+            <button class="filter-btn" data-filter="audio">🎵 Audio</button>
+        </div>
+    </div>
+    <div class="filter-group">
+        <span class="filter-label">Pricing:</span>
+        <div class="filter-btns" id="priceFilters">
+            <button class="price-btn active" data-price="all">All</button>
+            <button class="price-btn" data-price="free">Free</button>
+            <button class="price-btn" data-price="freemium">Freemium</button>
+            <button class="price-btn" data-price="paid">Paid</button>
+        </div>
+    </div>
+    <div class="results-count">
+        Showing <span id="toolCount">0</span> tools
+    </div>
+</section>
+
+<!-- TOOLS GRID -->
+<section class="tools-section">
+    <div class="tools-grid" id="toolsGrid">
+        <!-- Cards injected by JS -->
+    </div>
+    <div class="no-results hidden" id="noResults">
+        <i class="fa-solid fa-search"></i>
+        <p>No tools found. Try a different search or filter.</p>
+    </div>
+</section>
+
+<!-- SUBMIT TOOL CTA -->
+<section class="submit-tool-cta">
+    <div class="cta-inner" style="background:linear-gradient(135deg,#25343F,#3a5166);">
+        <h2>Know a great AI tool?</h2>
+        <p>Help the community discover it. Submit a tool and we'll review it for our directory.</p>
+        <button class="btn btn-primary" onclick="openSubmitPopup()">Submit a Tool <i class="fa-solid fa-plus"></i></button>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<div class="footer">
+    <div class="footer1">
+        <div class="contact"><h2>Contact</h2><p>Punjab, India</p><p>+91 ### ### ####</p></div>
+        <div class="useful_links">
+            <h2>Quick Links</h2>
+            <a href="home.html">Home</a>
+            <a href="quiz.html">Quiz</a>
+            <a href="contact_us.html">Contact Us</a>
+        </div>
+    </div>
+    <div class="footer2">
+        <div class="left_side">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+        </div>
+        <div class="right_side">
+            <i class="fa-brands fa-facebook"></i>
+            <i class="fa-brands fa-instagram"></i>
+            <i class="fa-brands fa-whatsapp"></i>
+        </div>
+    </div>
+</div>
+
+<!-- SUBMIT POPUP -->
+<div id="submitPopup" class="popup hidden">
+    <div class="popup-content" style="max-width:420px;">
+        <span class="close-btn" onclick="closeSubmitPopup()">&times;</span>
+        <h2>Submit an AI Tool</h2>
+        <input type="text" id="toolName" placeholder="Tool Name *">
+        <input type="url" id="toolUrl" placeholder="Tool URL *">
+        <select id="toolCategory" style="width:100%;padding:10px 14px;margin-bottom:12px;border-radius:10px;border:1.5px solid #ddd;font-size:0.92rem;outline:none;background:white;">
+            <option value="">Select Category *</option>
+            <option value="writing">Writing</option>
+            <option value="coding">Coding</option>
+            <option value="image">Image</option>
+            <option value="video">Video</option>
+            <option value="productivity">Productivity</option>
+            <option value="research">Research</option>
+            <option value="audio">Audio</option>
+        </select>
+        <textarea id="toolDesc" placeholder="Brief description of the tool *" rows="3" style="width:100%;padding:10px 14px;margin-bottom:12px;border-radius:10px;border:1.5px solid #ddd;font-size:0.92rem;outline:none;resize:vertical;"></textarea>
+        <select id="toolPrice" style="width:100%;padding:10px 14px;margin-bottom:12px;border-radius:10px;border:1.5px solid #ddd;font-size:0.92rem;outline:none;background:white;">
+            <option value="">Pricing Model *</option>
+            <option value="free">Free</option>
+            <option value="freemium">Freemium</option>
+            <option value="paid">Paid</option>
+        </select>
+        <button class="btn btn-primary" onclick="submitTool()" style="width:100%;margin-top:6px;">Submit Tool</button>
+    </div>
+</div>
+
+<script src="ai_tools.js"></script>
+<script src="auth.js"></script>
+</body>
+</html>

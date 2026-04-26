@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechLearn – Login</title>
+    <script src="https://kit.fontawesome.com/6dd324579f.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ===== RESET & BASE ===== */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --dark: #1a2a36;
+            --accent: #ff9b51;
+            --accent2: #ff6b35;
+            --bg: #f4f6f8;
+            --text-muted: #6b7f8c;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            color: var(--dark);
+            min-height: 100vh;
+        }
+
+        .hidden { display: none !important; }
+
+        a { text-decoration: none; color: inherit; }
+
+        /* ===== GATEWAY LAYOUT ===== */
+        .auth-gateway {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* LEFT PANEL */
+        .gateway-left {
+            flex: 1;
+            background: linear-gradient(135deg, var(--dark) 0%, #2d4a5e 60%, #3a5166 100%);
+            padding: 40px 60px;
+            display: flex;
+            flex-direction: column;
+            gap: 36px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .gateway-left::before {
+            content: '';
+            position: absolute;
+            top: -80px; right: -80px;
+            width: 320px; height: 320px;
+            background: radial-gradient(circle, rgba(255,155,81,0.12) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        .gateway-left::after {
+            content: '';
+            position: absolute;
+            bottom: -60px; left: -60px;
+            width: 240px; height: 240px;
+            background: radial-gradient(circle, rgba(255,155,81,0.08) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .back-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #BFC9D1;
+            font-size: 0.88rem;
+            font-weight: 500;
+            transition: color 0.2s;
+            z-index: 1;
+        }
+        .back-home:hover { color: var(--accent); }
+
+        .brand { z-index: 1; margin-top: 20px; }
+        .brand-name {
+            font-family: 'Syne', sans-serif;
+            font-size: 2.4rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            display: block;
+            margin-bottom: 8px;
+            color: white;
+        }
+        .brand-tagline { color: var(--accent); font-style: italic; font-size: 0.95rem; line-height: 1.5; }
+
+        .gateway-features {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: auto;
+            z-index: 1;
+        }
+        .gf-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 14px 18px;
+            background: rgba(255,255,255,0.07);
+            border-radius: 14px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: background 0.2s;
+        }
+        .gf-item:hover { background: rgba(255,255,255,0.11); }
+        .gf-item > i { color: var(--accent); font-size: 1.2rem; width: 22px; text-align: center; flex-shrink: 0; }
+        .gf-item > div { display: flex; flex-direction: column; gap: 2px; }
+        .gf-item strong { color: white; font-size: 0.92rem; font-weight: 600; }
+        .gf-item span { color: #9aadb9; font-size: 0.8rem; }
+
+        /* RIGHT PANEL */
+        .gateway-right {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 60px;
+            background: var(--bg);
+        }
+
+        .gateway-card {
+            width: 100%;
+            max-width: 420px;
+            position: relative;
+        }
+
+        .panel-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 500;
+            margin-bottom: 20px;
+            padding: 0;
+            transition: color 0.2s;
+        }
+        .panel-back:hover { color: var(--accent); }
+
+        .gateway-header { text-align: center; margin-bottom: 28px; }
+        .gateway-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--accent2), var(--accent));
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            margin: 0 auto 16px;
+            box-shadow: 0 8px 24px rgba(255,155,81,0.3);
+        }
+        .gateway-header h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 6px;
+        }
+        .gateway-header p { font-size: 0.92rem; color: var(--text-muted); }
+
+        /* ===== GATEWAY OPTIONS ===== */
+        .gateway-options { display: flex; flex-direction: column; gap: 12px; }
+
+        .go-btn {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px 20px;
+            border-radius: 16px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            background: white;
+            text-align: left;
+            transition: all 0.22s;
+            box-shadow: 0 2px 12px rgba(37,52,63,0.07);
+            width: 100%;
+        }
+        .go-btn-icon {
+            width: 44px; height: 44px;
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+        .go-btn-text { flex: 1; display: flex; flex-direction: column; gap: 2px; }
+        .go-btn-text strong { font-size: 0.97rem; font-weight: 700; color: var(--dark); }
+        .go-btn-text span { font-size: 0.8rem; color: var(--text-muted); }
+        .go-arrow { color: #ccc; font-size: 0.85rem; transition: transform 0.2s, color 0.2s; }
+
+        .go-login .go-btn-icon { background: #dbeafe; color: #2563eb; }
+        .go-login:hover { border-color: #2563eb; box-shadow: 0 6px 24px rgba(37,99,235,0.14); }
+        .go-login:hover .go-arrow { transform: translateX(3px); color: #2563eb; }
+
+        .go-signup .go-btn-icon { background: #fff3e0; color: var(--accent); }
+        .go-signup:hover { border-color: var(--accent); box-shadow: 0 6px 24px rgba(255,155,81,0.18); }
+        .go-signup:hover .go-arrow { transform: translateX(3px); color: var(--accent); }
+
+        .go-guest .go-btn-icon { background: var(--bg); color: var(--text-muted); }
+        .go-guest { background: transparent; box-shadow: none; border-color: #e0e0e0; }
+        .go-guest:hover { border-color: #aaa; background: white; }
+        .go-guest:hover .go-arrow { transform: translateX(3px); color: var(--dark); }
+        .go-guest .go-btn-text strong { color: var(--text-muted); font-weight: 600; }
+
+        .go-divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #ccc;
+            font-size: 0.82rem;
+            margin: 2px 0;
+        }
+        .go-divider::before, .go-divider::after { content: ''; flex: 1; height: 1px; background: #e8e8e8; }
+
+        /* ===== AUTH FORMS ===== */
+        .auth-form { display: flex; flex-direction: column; gap: 0; }
+        .form-group { margin-bottom: 16px; }
+        .form-group label { display: block; font-size: 0.83rem; font-weight: 600; margin-bottom: 6px; color: var(--dark); }
+
+        .input-icon { position: relative; display: flex; align-items: center; }
+        .input-icon > i:first-child {
+            position: absolute;
+            left: 14px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            pointer-events: none;
+        }
+        .input-icon input {
+            width: 100%;
+            padding: 11px 44px 11px 38px;
+            border: 1.5px solid #ddd;
+            border-radius: 12px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.93rem;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            background: white;
+            color: var(--dark);
+            box-sizing: border-box;
+        }
+        .input-icon input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(255,155,81,0.12);
+        }
+
+        .toggle-pw {
+            position: absolute;
+            right: 12px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            padding: 4px;
+            transition: color 0.2s;
+        }
+        .toggle-pw:hover { color: var(--dark); }
+
+        /* ===== BUTTON ===== */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            transition: all 0.22s;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent2), var(--accent));
+            color: white;
+            box-shadow: 0 4px 16px rgba(255,155,81,0.35);
+        }
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 24px rgba(255,155,81,0.45);
+        }
+        .btn-primary:disabled { opacity: 0.7; cursor: not-allowed; }
+        .auth-btn { width: 100%; padding: 13px; font-size: 1rem; margin-top: 4px; border-radius: 12px; }
+
+        /* ===== MESSAGES ===== */
+        .auth-error {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #fde8e8;
+            color: #c0392b;
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-size: 0.88rem;
+            margin-bottom: 14px;
+        }
+        .auth-success {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #d4edda;
+            color: #155724;
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-size: 0.88rem;
+            margin-bottom: 14px;
+        }
+
+        .switch-auth {
+            text-align: center;
+            margin-top: 14px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+        .switch-auth span {
+            color: var(--accent);
+            font-weight: 700;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .switch-auth span:hover { color: var(--dark); text-decoration: underline; }
+
+        /* ===== DEMO NOTICE ===== */
+        .demo-notice {
+            background: rgba(255,155,81,0.1);
+            border: 1px solid rgba(255,155,81,0.3);
+            border-radius: 10px;
+            padding: 10px 14px;
+            font-size: 0.82rem;
+            color: #7a4a1e;
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+        .demo-notice strong { color: var(--accent2); }
+
+        /* ===== REDIRECT TOAST ===== */
+        #redirectToast {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(80px);
+            background: var(--dark);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+            transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+            z-index: 9999;
+            white-space: nowrap;
+        }
+        #redirectToast.show { transform: translateX(-50%) translateY(0); }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .gateway-left { display: none; }
+            .gateway-right { padding: 32px 20px; }
+            .auth-gateway { min-height: 100vh; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ===== REDIRECT TOAST ===== -->
+<div id="redirectToast"><i class="fa-solid fa-circle-notch fa-spin"></i> &nbsp;Redirecting you now…</div>
+
+<!-- ===== AUTH GATEWAY ===== -->
+<div id="authGateway" class="auth-gateway">
+    <div class="gateway-left">
+        <a href="home.html" class="back-home"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
+        <div class="brand">
+            <span class="brand-name">TechLearn</span>
+            <p class="brand-tagline">Powering Tomorrow with Intelligent Technology</p>
+        </div>
+        <div class="gateway-features">
+            <div class="gf-item"><i class="fa-solid fa-circle-question"></i><div><strong>Interactive Quizzes</strong><span>Test your AI & Web Dev knowledge</span></div></div>
+            <div class="gf-item"><i class="fa-solid fa-robot"></i><div><strong>AI Tools Directory</strong><span>Browse 34+ curated tools</span></div></div>
+            <div class="gf-item"><i class="fa-solid fa-trophy"></i><div><strong>Track Progress</strong><span>Save scores & climb the board</span></div></div>
+            <div class="gf-item"><i class="fa-solid fa-newspaper"></i><div><strong>Tech News</strong><span>Stay updated with latest trends</span></div></div>
+        </div>
+    </div>
+    <div class="gateway-right">
+        <div class="gateway-card">
+            <div class="gateway-header">
+                <div class="gateway-icon"><i class="fa-solid fa-bolt"></i></div>
+                <h2>Get Started</h2>
+                <p>Choose how you'd like to continue</p>
+            </div>
+            <div class="gateway-options">
+                <button class="go-btn go-login" onclick="showPanel('login')">
+                    <div class="go-btn-icon"><i class="fa-solid fa-right-to-bracket"></i></div>
+                    <div class="go-btn-text">
+                        <strong>Log In</strong>
+                        <span>Continue with your account</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-right go-arrow"></i>
+                </button>
+                <button class="go-btn go-signup" onclick="showPanel('signup')">
+                    <div class="go-btn-icon"><i class="fa-solid fa-user-plus"></i></div>
+                    <div class="go-btn-text">
+                        <strong>Create Account</strong>
+                        <span>Join thousands of learners</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-right go-arrow"></i>
+                </button>
+                <div class="go-divider"><span>or</span></div>
+                <button class="go-btn go-guest" onclick="continueAsGuest()">
+                    <div class="go-btn-icon"><i class="fa-solid fa-user-secret"></i></div>
+                    <div class="go-btn-text">
+                        <strong>Continue without signing up</strong>
+                        <span>Limited features — no account needed</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-right go-arrow"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== LOGIN PANEL ===== -->
+<div id="loginPanel" class="auth-gateway hidden">
+    <div class="gateway-left">
+        <a href="home.html" class="back-home"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
+        <div class="brand">
+            <span class="brand-name">TechLearn</span>
+            <p class="brand-tagline">Powering Tomorrow with Intelligent Technology</p>
+        </div>
+        <div class="gateway-features">
+            <div class="gf-item"><i class="fa-solid fa-circle-check"></i><div><strong>Your Progress Saved</strong><span>Pick up right where you left off</span></div></div>
+            <div class="gf-item"><i class="fa-solid fa-trophy"></i><div><strong>Leaderboard Access</strong><span>See how you rank globally</span></div></div>
+            <div class="gf-item"><i class="fa-solid fa-shield-halved"></i><div><strong>Secure & Private</strong><span>Your data stays yours</span></div></div>
+        </div>
+    </div>
+    <div class="gateway-right">
+        <div class="gateway-card">
+            <button class="panel-back" onclick="showGateway()"><i class="fa-solid fa-arrow-left"></i> Back</button>
+            <div class="gateway-header">
+                <div class="gateway-icon" style="background:linear-gradient(135deg,#2563eb,#1a3a8f);"><i class="fa-solid fa-right-to-bracket"></i></div>
+                <h2>Welcome Back</h2>
+                <p>Log in to continue your learning journey</p>
+            </div>
+            <div class="demo-notice">
+                <strong>Demo mode:</strong> Sign up first to create an account, then log in with those credentials. Data is stored in your browser's localStorage.
+            </div>
+            <div class="auth-form">
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <div class="input-icon"><i class="fa-solid fa-envelope"></i><input type="email" id="loginEmail" placeholder="example@gmail.com" onkeypress="handleLoginKey(event)"></div>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <div class="input-icon">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" id="loginPassword" placeholder="Enter your password" onkeypress="handleLoginKey(event)">
+                        <button class="toggle-pw" type="button" onclick="togglePw('loginPassword',this)"><i class="fa-solid fa-eye"></i></button>
+                    </div>
+                </div>
+                <div id="loginError" class="auth-error hidden"><i class="fa-solid fa-circle-exclamation"></i> <span></span></div>
+                <button class="btn btn-primary auth-btn" id="loginBtn" onclick="login()">
+                    Log In <i class="fa-solid fa-arrow-right"></i>
+                </button>
+                <p class="switch-auth">Don't have an account? <span onclick="showPanel('signup')">Sign Up</span></p>
+                <p class="switch-auth"><span onclick="continueAsGuest()" style="font-size:0.85rem;color:var(--text-muted);">Continue as Guest</span></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== SIGNUP PANEL ===== -->
+<div id="signupPanel" class="auth-gateway hidden">
+    <div class="gateway-left">
+        <a href="home.html" class="back-home"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
+        <div class="brand">
+            <span class="brand-name">TechLearn</span>
+            <p class="brand-tagline">Powering Tomorrow with Intelligent Technology</p>
+        </div>
+        <div class="gateway-features">
+            <div class="gf-item"><i class="fa-solid fa-star"></i><div><strong>Free Forever</strong><span>No credit card required</span></div></div>
+            <div class="gf-item"><i class="fa-solid fa-chart-line"></i><div><strong>Track Your Growth</strong><span>See your improvement over time</span></div></div>
+            <div class="gf-item"><i class="fa-solid fa-users"></i><div><strong>Join 12,500+ Learners</strong><span>Be part of the community</span></div></div>
+        </div>
+    </div>
+    <div class="gateway-right">
+        <div class="gateway-card">
+            <button class="panel-back" onclick="showGateway()"><i class="fa-solid fa-arrow-left"></i> Back</button>
+            <div class="gateway-header">
+                <div class="gateway-icon"><i class="fa-solid fa-user-plus"></i></div>
+                <h2>Create Account</h2>
+                <p>Join thousands of tech learners today</p>
+            </div>
+            <div class="auth-form">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <div class="input-icon"><i class="fa-solid fa-user"></i><input type="text" id="signupName" placeholder="Your full name"></div>
+                </div>
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <div class="input-icon"><i class="fa-solid fa-phone"></i><input type="tel" id="signupNumber" placeholder="+91 #### ### ###"></div>
+                </div>
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <div class="input-icon"><i class="fa-solid fa-envelope"></i><input type="email" id="signupEmail" placeholder="example@gmail.com"></div>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <div class="input-icon">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" id="signupPassword" placeholder="Min. 6 characters">
+                        <button class="toggle-pw" type="button" onclick="togglePw('signupPassword',this)"><i class="fa-solid fa-eye"></i></button>
+                    </div>
+                </div>
+                <div id="signupError" class="auth-error hidden"><i class="fa-solid fa-circle-exclamation"></i> <span></span></div>
+                <div id="signupSuccess" class="auth-success hidden"><i class="fa-solid fa-circle-check"></i> <span></span></div>
+                <button class="btn btn-primary auth-btn" id="signupBtn" onclick="signup()">
+                    Create Account <i class="fa-solid fa-arrow-right"></i>
+                </button>
+                <p class="switch-auth">Already have an account? <span onclick="showPanel('login')">Log In</span></p>
+                <p class="switch-auth"><span onclick="continueAsGuest()" style="font-size:0.85rem;color:var(--text-muted);">Continue as Guest</span></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// ===== REDIRECT HELPER =====
+function getRedirectTarget() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('redirect') || null;
+}
+
+function doRedirect(destination) {
+    const toast = document.getElementById('redirectToast');
+    toast.classList.add('show');
+    setTimeout(() => { window.location.href = destination; }, 900);
+}
+
+// ===== PANEL NAVIGATION =====
+function showGateway() {
+    document.getElementById('authGateway').classList.remove('hidden');
+    document.getElementById('loginPanel').classList.add('hidden');
+    document.getElementById('signupPanel').classList.add('hidden');
+}
+
+function showPanel(panel) {
+    document.getElementById('authGateway').classList.add('hidden');
+    document.getElementById('loginPanel').classList.add('hidden');
+    document.getElementById('signupPanel').classList.add('hidden');
+    if (panel === 'login') {
+        document.getElementById('loginPanel').classList.remove('hidden');
+    } else if (panel === 'signup') {
+        document.getElementById('signupPanel').classList.remove('hidden');
+    }
+}
+
+// ===== GUEST MODE =====
+function continueAsGuest() {
+    localStorage.setItem('tl_mode', 'guest');
+    localStorage.removeItem('tl_loggedIn');
+    const redirect = getRedirectTarget() || 'home.html';
+    doRedirect(redirect);
+}
+
+// ===== SIGN UP =====
+function signup() {
+    const name     = document.getElementById('signupName').value.trim();
+    const phoneNo  = document.getElementById('signupNumber').value.trim();
+    const email    = document.getElementById('signupEmail').value.trim();
+    const password = document.getElementById('signupPassword').value;
+
+    hideMsg('signupError'); hideMsg('signupSuccess');
+
+    if (!name || !phoneNo || !email || !password) {
+        return showMsg('signupError', 'Please fill in all fields.');
+    }
+    if (!isValidEmail(email)) {
+        return showMsg('signupError', 'Please enter a valid email address.');
+    }
+    if (password.length < 6) {
+        return showMsg('signupError', 'Password must be at least 6 characters.');
+    }
+
+    // Save user to localStorage
+    localStorage.setItem('tl_name', name);
+    localStorage.setItem('tl_phone', phoneNo);
+    localStorage.setItem('tl_email', email);
+    localStorage.setItem('tl_password', password);
+    localStorage.setItem('tl_loggedIn', 'true');
+    localStorage.setItem('tl_mode', 'user');
+
+    const btn = document.getElementById('signupBtn');
+    btn.textContent = `Welcome, ${name}! ✓`;
+    btn.disabled = true;
+
+    showMsg('signupSuccess', `Account created! Welcome, ${name}! Redirecting…`);
+
+    setTimeout(() => {
+        const redirect = getRedirectTarget() || 'home.html';
+        doRedirect(redirect);
+    }, 1000);
+}
+
+// ===== LOGIN =====
+function login() {
+    const email    = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value;
+
+    hideMsg('loginError');
+
+    if (!email || !password) {
+        return showMsg('loginError', 'Please enter your email and password.');
+    }
+
+    const storedEmail    = localStorage.getItem('tl_email');
+    const storedPassword = localStorage.getItem('tl_password');
+    const storedName     = localStorage.getItem('tl_name');
+
+    if (!storedEmail) {
+        return showMsg('loginError', 'No account found. Please sign up first.');
+    }
+
+    if (email === storedEmail && password === storedPassword) {
+        localStorage.setItem('tl_loggedIn', 'true');
+        localStorage.setItem('tl_mode', 'user');
+
+        const btn = document.getElementById('loginBtn');
+        btn.textContent = `Welcome back, ${storedName}! ✓`;
+        btn.disabled = true;
+
+        setTimeout(() => {
+            const redirect = getRedirectTarget() || 'home.html';
+            doRedirect(redirect);
+        }, 800);
+    } else {
+        showMsg('loginError', 'Invalid email or password. Please try again.');
+        // Shake the form
+        const card = document.querySelector('#loginPanel .gateway-card');
+        card.style.animation = 'shake 0.4s ease';
+        setTimeout(() => card.style.animation = '', 400);
+    }
+}
+
+// ===== KEYBOARD SUPPORT =====
+function handleLoginKey(e) {
+    if (e.key === 'Enter') login();
+}
+
+// ===== PASSWORD TOGGLE =====
+function togglePw(inputId, btn) {
+    const input = document.getElementById(inputId);
+    const icon = btn.querySelector('i');
+    if (input.type === 'password') {
+        input.type = 'text';
+        icon.className = 'fa-solid fa-eye-slash';
+    } else {
+        input.type = 'password';
+        icon.className = 'fa-solid fa-eye';
+    }
+}
+
+// ===== HELPERS =====
+function isValidEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+function showMsg(id, text) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.querySelector('span').textContent = text;
+    el.classList.remove('hidden');
+}
+function hideMsg(id) {
+    const el = document.getElementById(id);
+    if (el) el.classList.add('hidden');
+}
+
+// ===== SHAKE ANIMATION =====
+const shakeStyle = document.createElement('style');
+shakeStyle.textContent = `
+@keyframes shake {
+    0%,100%{transform:translateX(0)}
+    20%{transform:translateX(-8px)}
+    40%{transform:translateX(8px)}
+    60%{transform:translateX(-5px)}
+    80%{transform:translateX(5px)}
+}`;
+document.head.appendChild(shakeStyle);
+
+// ===== INIT: skip login if already authenticated =====
+document.addEventListener('DOMContentLoaded', () => {
+    if (localStorage.getItem('tl_loggedIn') === 'true') {
+        const redirect = getRedirectTarget() || 'home.html';
+        doRedirect(redirect);
+    }
+    // If came with ?panel=login or ?panel=signup, show that panel directly
+    const params = new URLSearchParams(window.location.search);
+    const panel = params.get('panel');
+    if (panel === 'login' || panel === 'signup') showPanel(panel);
+});
+</script>
+</body>
+</html>

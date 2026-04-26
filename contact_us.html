@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechLearn – Contact Us</title>
+    <link rel="stylesheet" href="common.css">
+    <link rel="stylesheet" href="contact_us.css">
+    <script src="https://kit.fontawesome.com/6dd324579f.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="header">
+    <div class="menu_bar">
+        <div class="left_side">TechLearn</div>
+        <div class="right_side">
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="about_us.html">About Us</a></li>
+                <li><a href="quiz.html">Quiz</a></li>
+                <li><a href="ai_tools.html">AI Tools</a></li>
+                <li><a href="contact_us.html" class="active">Contact</a></li>
+                <li><a href="loginPage.html" class="btn btn-primary" style="padding:7px 18px;">Login</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="headline">
+    <h1><i class="fa-solid fa-caret-right"></i> Powering Tomorrow with Intelligent Technology <i class="fa-solid fa-caret-left"></i></h1>
+</div>
+
+<div class="main">
+    <div class="left_side">
+        <h1>Contact Us</h1>
+        <p>We are committed to processing your information in order to connect with you and talk about your project.</p>
+        <div class="address">
+            <p class="gmail"><i class="fa-solid fa-at"></i> techlearn@example.com</p>
+            <p class="c_address"><i class="fa-solid fa-house"></i> Punjab, India</p>
+            <p class="phone_number"><i class="fa-solid fa-phone"></i> +91 #### ### ###</p>
+        </div>
+        <div class="social-links">
+            <a href="#"><i class="fa-brands fa-facebook"></i></a>
+            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
+            <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+        </div>
+    </div>
+    <div class="right_side">
+        <div class="contact-form">
+            <h2>Send a Message</h2>
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" placeholder="Your full name">
+            </div>
+            <div class="form-group">
+                <label for="phone_no">Phone No</label>
+                <input type="tel" id="phone_no" placeholder="Your phone number">
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="Your email address">
+            </div>
+            <div class="form-group">
+                <label for="subject">Subject</label>
+                <input type="text" id="subject" placeholder="What's it about?">
+            </div>
+            <div class="form-group">
+                <label for="message">Message</label>
+                <textarea id="message" rows="4" placeholder="Write your message here..."></textarea>
+            </div>
+            <button class="btn btn-primary" onclick="submitContactForm()" style="width:100%;padding:13px;">
+                Send Message <i class="fa-solid fa-paper-plane"></i>
+            </button>
+            <div id="successMsg" class="success-msg hidden">
+                <i class="fa-solid fa-circle-check"></i> Message sent! We'll get back to you soon.
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    <div class="footer1">
+        <div class="contact"><h2>Contact</h2><p>Punjab, India</p><p>+91 ### ### ####</p><p>techlearn.com</p></div>
+        <div class="other"><h2>Other</h2><a href="#">Socially Rise</a><a href="#">Group Chat</a><a href="#">Github</a></div>
+        <div class="discover"><h2>Discover</h2><a href="#">Our Blog</a><a href="#">Plans & Pricing</a><a href="#">Knowledge Base</a></div>
+        <div class="useful_links"><h2>Useful Links</h2><a href="quiz.html">Quiz</a><a href="ai_tools.html">AI Tools</a><a href="#">Reviews</a></div>
+        <div class="support"><h2>Support</h2><a href="about_us.html">About Us</a><a href="contact_us.html">Contact Us</a><a href="#">Community</a></div>
+    </div>
+    <div class="footer2">
+        <div class="left_side"><a href="#">Privacy Policy</a><a href="#">Cookies</a><a href="#">Terms of Service</a></div>
+        <div class="right_side"><i class="fa-brands fa-facebook"></i><i class="fa-brands fa-instagram"></i><i class="fa-brands fa-whatsapp"></i></div>
+    </div>
+</div>
+<script>
+function submitContactForm() {
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const message = document.getElementById('message').value.trim();
+    if (!name || !email || !message) { alert('Please fill in Name, Email and Message.'); return; }
+    document.getElementById('successMsg').classList.remove('hidden');
+    ['name','phone_no','email','subject','message'].forEach(id => document.getElementById(id).value = '');
+    setTimeout(() => document.getElementById('successMsg').classList.add('hidden'), 5000);
+}
+</script>
+<script src="auth.js"></script>
+</body>
+</html>
