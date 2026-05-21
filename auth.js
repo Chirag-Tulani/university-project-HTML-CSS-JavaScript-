@@ -20,13 +20,11 @@
     }
 
     function updateNavbar() {
-        // Find the login anchor – it has class btn-primary and href loginPage.html
         const loginLink = document.querySelector('.right_side a[href="loginPage.html"]');
         if (!loginLink) return;
 
         if (isLoggedIn()) {
             const name = getName();
-            // Build user pill: name + logout icon
             const pill = document.createElement('div');
             pill.className = 'auth-pill';
             pill.innerHTML = `
@@ -45,10 +43,8 @@
             `;
             loginLink.parentNode.replaceChild(pill, loginLink);
         }
-        // else: not logged in, not guest — leave Login button as is
     }
 
-    // Expose logout globally so inline onclick works
     window.authLogout = logout;
 
     // Also expose requireAuth for pages that want to gate content

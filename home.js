@@ -8,7 +8,7 @@ function animateCounter(id, target, suffix = '') {
         if (current >= target) { current = target; clearInterval(timer); }
         el.textContent = current.toLocaleString() + suffix;
     }, 30);
-}
+}     
 
 window.addEventListener('load', () => {
     animateCounter('stat1', 12500, '+');
