@@ -206,26 +206,5 @@
         <button class="btn btn-primary" onclick="submitPopup()" style="width:100%;margin-top:10px;">Submit</button>
     </div>
 </div>
-
-<script src="home.js"></script>
-<script src="auth.js"></script>
-<script type = "text/javaScript">
-    (function(l) {
-        if(l.search[1] === "/") {
-            var decoded = l.search
-            .slice(1)
-            .split("&")
-            .map(function (s) {
-                return s.replace(/~and~/g, "&");
-            })
-            .join("?");
-            window.history.replaceState(
-                null,
-                null,
-                l.pathname.slice(0, -1) + decoded + l.hash
-            );
-        }
-    })(window.location);
-</script>
 </body>
 </html>
